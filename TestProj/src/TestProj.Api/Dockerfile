@@ -3,12 +3,11 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 # Copy project file and restore dependencies
-COPY ["src/TestProj.Api/TestProj.Api.csproj", "src/TestProj.Api/"]
-RUN dotnet restore "src/TestProj.Api/TestProj.Api.csproj"
+COPY ["src/TestProj.Api/TestProj.Api.csproj", "./"]
+RUN dotnet restore "TestProj.Api.csproj"
 
 # Copy everything and build
 COPY . .
-WORKDIR "/src/src/TestProj.Api"
 RUN dotnet publish "TestProj.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 # Runtime image
